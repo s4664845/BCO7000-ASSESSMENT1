@@ -1,0 +1,11 @@
+---
+title: "Assessment1-Part1"
+author: "Yalan S4664845"
+date: "05/03/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
