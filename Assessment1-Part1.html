@@ -189,6 +189,9 @@ library(tidyverse)</code></pre>
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>#install.packages(&quot;skimr&quot;)
 library(skimr)
+library(knitr)
+
+#load the dataset from [link](https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-09-04/fastfood_calories.csv)
 
 fastfood_calories &lt;- read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-09-04/fastfood_calories.csv&#39;)</code></pre>
 <pre><code>## New names:
@@ -201,6 +204,374 @@ fastfood_calories &lt;- read_csv(&#39;https://raw.githubusercontent.com/rfordata
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>#create a variable with dataset named &quot;fastfood&quot;
+Fastfood_calories &lt;- fastfood_calories %&gt;%
+  mutate(Fastfood = &quot;Fastfood&quot;)
+
+#Display the first 10 rows of the data set
+
+head(Fastfood_calories,10)</code></pre>
+<pre><code>## # A tibble: 10 × 19
+##     ...1 restaurant item            calories cal_fat total_fat sat_fat trans_fat
+##    &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;              &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;
+##  1     1 Mcdonalds  Artisan Grille…      380      60         7       2       0  
+##  2     2 Mcdonalds  Single Bacon S…      840     410        45      17       1.5
+##  3     3 Mcdonalds  Double Bacon S…     1130     600        67      27       3  
+##  4     4 Mcdonalds  Grilled Bacon …      750     280        31      10       0.5
+##  5     5 Mcdonalds  Crispy Bacon S…      920     410        45      12       0.5
+##  6     6 Mcdonalds  Big Mac              540     250        28      10       1  
+##  7     7 Mcdonalds  Cheeseburger         300     100        12       5       0.5
+##  8     8 Mcdonalds  Classic Chicke…      510     210        24       4       0  
+##  9     9 Mcdonalds  Double Cheeseb…      430     190        21      11       1  
+## 10    10 Mcdonalds  Double Quarter…      770     400        45      21       2.5
+## # … with 11 more variables: cholesterol &lt;dbl&gt;, sodium &lt;dbl&gt;, total_carb &lt;dbl&gt;,
+## #   fiber &lt;dbl&gt;, sugar &lt;dbl&gt;, protein &lt;dbl&gt;, vit_a &lt;dbl&gt;, vit_c &lt;dbl&gt;,
+## #   calcium &lt;dbl&gt;, salad &lt;chr&gt;, Fastfood &lt;chr&gt;</code></pre>
+<pre class="r"><code>kable(Fastfood_calories[1:10,1:19])</code></pre>
+<table style="width:100%;">
+<colgroup>
+<col width="2%" />
+<col width="5%" />
+<col width="22%" />
+<col width="4%" />
+<col width="4%" />
+<col width="5%" />
+<col width="4%" />
+<col width="5%" />
+<col width="6%" />
+<col width="3%" />
+<col width="5%" />
+<col width="3%" />
+<col width="3%" />
+<col width="4%" />
+<col width="3%" />
+<col width="3%" />
+<col width="4%" />
+<col width="3%" />
+<col width="4%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">…1</th>
+<th align="left">restaurant</th>
+<th align="left">item</th>
+<th align="right">calories</th>
+<th align="right">cal_fat</th>
+<th align="right">total_fat</th>
+<th align="right">sat_fat</th>
+<th align="right">trans_fat</th>
+<th align="right">cholesterol</th>
+<th align="right">sodium</th>
+<th align="right">total_carb</th>
+<th align="right">fiber</th>
+<th align="right">sugar</th>
+<th align="right">protein</th>
+<th align="right">vit_a</th>
+<th align="right">vit_c</th>
+<th align="right">calcium</th>
+<th align="left">salad</th>
+<th align="left">Fastfood</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">Mcdonalds</td>
+<td align="left">Artisan Grilled Chicken Sandwich</td>
+<td align="right">380</td>
+<td align="right">60</td>
+<td align="right">7</td>
+<td align="right">2</td>
+<td align="right">0.0</td>
+<td align="right">95</td>
+<td align="right">1110</td>
+<td align="right">44</td>
+<td align="right">3</td>
+<td align="right">11</td>
+<td align="right">37</td>
+<td align="right">4</td>
+<td align="right">20</td>
+<td align="right">20</td>
+<td align="left">Other</td>
+<td align="left">Fastfood</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">Mcdonalds</td>
+<td align="left">Single Bacon Smokehouse Burger</td>
+<td align="right">840</td>
+<td align="right">410</td>
+<td align="right">45</td>
+<td align="right">17</td>
+<td align="right">1.5</td>
+<td align="right">130</td>
+<td align="right">1580</td>
+<td align="right">62</td>
+<td align="right">2</td>
+<td align="right">18</td>
+<td align="right">46</td>
+<td align="right">6</td>
+<td align="right">20</td>
+<td align="right">20</td>
+<td align="left">Other</td>
+<td align="left">Fastfood</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="left">Mcdonalds</td>
+<td align="left">Double Bacon Smokehouse Burger</td>
+<td align="right">1130</td>
+<td align="right">600</td>
+<td align="right">67</td>
+<td align="right">27</td>
+<td align="right">3.0</td>
+<td align="right">220</td>
+<td align="right">1920</td>
+<td align="right">63</td>
+<td align="right">3</td>
+<td align="right">18</td>
+<td align="right">70</td>
+<td align="right">10</td>
+<td align="right">20</td>
+<td align="right">50</td>
+<td align="left">Other</td>
+<td align="left">Fastfood</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="left">Mcdonalds</td>
+<td align="left">Grilled Bacon Smokehouse Chicken Sandwich</td>
+<td align="right">750</td>
+<td align="right">280</td>
+<td align="right">31</td>
+<td align="right">10</td>
+<td align="right">0.5</td>
+<td align="right">155</td>
+<td align="right">1940</td>
+<td align="right">62</td>
+<td align="right">2</td>
+<td align="right">18</td>
+<td align="right">55</td>
+<td align="right">6</td>
+<td align="right">25</td>
+<td align="right">20</td>
+<td align="left">Other</td>
+<td align="left">Fastfood</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="left">Mcdonalds</td>
+<td align="left">Crispy Bacon Smokehouse Chicken Sandwich</td>
+<td align="right">920</td>
+<td align="right">410</td>
+<td align="right">45</td>
+<td align="right">12</td>
+<td align="right">0.5</td>
+<td align="right">120</td>
+<td align="right">1980</td>
+<td align="right">81</td>
+<td align="right">4</td>
+<td align="right">18</td>
+<td align="right">46</td>
+<td align="right">6</td>
+<td align="right">20</td>
+<td align="right">20</td>
+<td align="left">Other</td>
+<td align="left">Fastfood</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="left">Mcdonalds</td>
+<td align="left">Big Mac</td>
+<td align="right">540</td>
+<td align="right">250</td>
+<td align="right">28</td>
+<td align="right">10</td>
+<td align="right">1.0</td>
+<td align="right">80</td>
+<td align="right">950</td>
+<td align="right">46</td>
+<td align="right">3</td>
+<td align="right">9</td>
+<td align="right">25</td>
+<td align="right">10</td>
+<td align="right">2</td>
+<td align="right">15</td>
+<td align="left">Other</td>
+<td align="left">Fastfood</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="left">Mcdonalds</td>
+<td align="left">Cheeseburger</td>
+<td align="right">300</td>
+<td align="right">100</td>
+<td align="right">12</td>
+<td align="right">5</td>
+<td align="right">0.5</td>
+<td align="right">40</td>
+<td align="right">680</td>
+<td align="right">33</td>
+<td align="right">2</td>
+<td align="right">7</td>
+<td align="right">15</td>
+<td align="right">10</td>
+<td align="right">2</td>
+<td align="right">10</td>
+<td align="left">Other</td>
+<td align="left">Fastfood</td>
+</tr>
+<tr class="even">
+<td align="right">8</td>
+<td align="left">Mcdonalds</td>
+<td align="left">Classic Chicken Sandwich</td>
+<td align="right">510</td>
+<td align="right">210</td>
+<td align="right">24</td>
+<td align="right">4</td>
+<td align="right">0.0</td>
+<td align="right">65</td>
+<td align="right">1040</td>
+<td align="right">49</td>
+<td align="right">3</td>
+<td align="right">6</td>
+<td align="right">25</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="left">Other</td>
+<td align="left">Fastfood</td>
+</tr>
+<tr class="odd">
+<td align="right">9</td>
+<td align="left">Mcdonalds</td>
+<td align="left">Double Cheeseburger</td>
+<td align="right">430</td>
+<td align="right">190</td>
+<td align="right">21</td>
+<td align="right">11</td>
+<td align="right">1.0</td>
+<td align="right">85</td>
+<td align="right">1040</td>
+<td align="right">35</td>
+<td align="right">2</td>
+<td align="right">7</td>
+<td align="right">25</td>
+<td align="right">20</td>
+<td align="right">4</td>
+<td align="right">15</td>
+<td align="left">Other</td>
+<td align="left">Fastfood</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="left">Mcdonalds</td>
+<td align="left">Double Quarter Pounder® with Cheese</td>
+<td align="right">770</td>
+<td align="right">400</td>
+<td align="right">45</td>
+<td align="right">21</td>
+<td align="right">2.5</td>
+<td align="right">175</td>
+<td align="right">1290</td>
+<td align="right">42</td>
+<td align="right">3</td>
+<td align="right">10</td>
+<td align="right">51</td>
+<td align="right">20</td>
+<td align="right">6</td>
+<td align="right">20</td>
+<td align="left">Other</td>
+<td align="left">Fastfood</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#Display the first 10 rows of the dataset and the first 5 variables
+
+kable(Fastfood_calories[1:10,1:5])</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">…1</th>
+<th align="left">restaurant</th>
+<th align="left">item</th>
+<th align="right">calories</th>
+<th align="right">cal_fat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">Mcdonalds</td>
+<td align="left">Artisan Grilled Chicken Sandwich</td>
+<td align="right">380</td>
+<td align="right">60</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">Mcdonalds</td>
+<td align="left">Single Bacon Smokehouse Burger</td>
+<td align="right">840</td>
+<td align="right">410</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="left">Mcdonalds</td>
+<td align="left">Double Bacon Smokehouse Burger</td>
+<td align="right">1130</td>
+<td align="right">600</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="left">Mcdonalds</td>
+<td align="left">Grilled Bacon Smokehouse Chicken Sandwich</td>
+<td align="right">750</td>
+<td align="right">280</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="left">Mcdonalds</td>
+<td align="left">Crispy Bacon Smokehouse Chicken Sandwich</td>
+<td align="right">920</td>
+<td align="right">410</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="left">Mcdonalds</td>
+<td align="left">Big Mac</td>
+<td align="right">540</td>
+<td align="right">250</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="left">Mcdonalds</td>
+<td align="left">Cheeseburger</td>
+<td align="right">300</td>
+<td align="right">100</td>
+</tr>
+<tr class="even">
+<td align="right">8</td>
+<td align="left">Mcdonalds</td>
+<td align="left">Classic Chicken Sandwich</td>
+<td align="right">510</td>
+<td align="right">210</td>
+</tr>
+<tr class="odd">
+<td align="right">9</td>
+<td align="left">Mcdonalds</td>
+<td align="left">Double Cheeseburger</td>
+<td align="right">430</td>
+<td align="right">190</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="left">Mcdonalds</td>
+<td align="left">Double Quarter Pounder® with Cheese</td>
+<td align="right">770</td>
+<td align="right">400</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 
